@@ -53,7 +53,6 @@ public:
             cout << hashcode(*it) << "\t\t" << *it << endl;
         }
     }
-    friend int prime_number(Hashtable);
 };
 int is_prime(int a) {
     if (a < 2)

@@ -43,7 +43,6 @@ class Hashtable
                 ++index;
             }
         }
-    friend int prime_number(Hashtable);
 };
 int is_prime(int a) {
     if (a < 2)
