@@ -45,32 +45,25 @@ class Hashtable
         }
     friend int prime_number(Hashtable);
 };
-int is_prime(int a)
-{
-    int i;
-    if(a==2)
-    return a;
-    else {
-        for(i=3;i<=a/2;i++)
-        {
-            if(a%i==0)
-            break;
-        }
-        if(i>a/2)
-        return 1;
-        else return 0;
-    }
-}
-int prime_number(Hashtable h){
-        int a= h.capacity;
-        while(a>0){
-            int x=is_prime(a);
-            if(x==1)
-            return a;
-            else a--;
-        }
-    }
+int is_prime(int a) {
+    if (a < 2)
+        return 0;
 
+    for (int i = 2; i * i <= a; ++i) {
+        if (a % i == 0)
+            return 0;
+    }
+    return 1;
+}
+int prime_number(int capacity) {
+    while (capacity > 0) {
+        if (is_prime(capacity))
+            return capacity;
+        else
+            --capacity;
+    }
+    return 0;
+}
 int main()
 {
     int choice,key,capacity, n, c;
