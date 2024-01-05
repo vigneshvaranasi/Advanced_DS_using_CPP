@@ -7,8 +7,8 @@ using namespace std;
 class Data
 {
 public:
-    int key;
-    int value;
+    int keyValue;
+    int keyCount;
 };
 
 class Hashtable
@@ -24,8 +24,8 @@ public:
         vec.resize(capacity);
         for (int i = 0; i < capacity; i++)
         {
-            vec[i].key = 0;
-            vec[i].value = 0;
+            vec[i].keyValue = 0;
+            vec[i].keyCount = 0;
         }
     }
     int funselect(int key)
@@ -97,15 +97,15 @@ public:
     void insert(int key)
     {
         int index = funselect(key);
-        if (vec[index].key != 0)
+        if (vec[index].keyValue != 0)
         {
             cout << "\nKey (" << key << ") already exists\n";
-            vec[index].value++;
+            vec[index].keyCount++;
         }
         else
         {
-            vec[index].key = key;
-            vec[index].value++;
+            vec[index].keyValue = key;
+            vec[index].keyCount++;
             cout << "\nKey (" << key << ") has been inserted\n";
         }
     }
@@ -113,10 +113,10 @@ public:
     void remove_element(int key)
     {
         int index = funselect(key);
-        if (vec[index].key == key)
+        if (vec[index].keyValue == key)
         {
-            vec[index].key = 0;
-            vec[index].value--;
+            vec[index].keyValue = 0;
+            vec[index].keyCount--;
             cout << "\nKey (" << key << ") has been removed\n";
         }
         else
@@ -137,7 +137,7 @@ public:
              << "Count" << endl;
         for (int i = 0; i < capacity; i++)
         {
-            cout << i << "\t" << vec[i].key << "\t\t" << vec[i].value << endl;
+            cout << i << "\t" << vec[i].keyValue << "\t\t" << vec[i].keyCount << endl;
         }
     }
 };

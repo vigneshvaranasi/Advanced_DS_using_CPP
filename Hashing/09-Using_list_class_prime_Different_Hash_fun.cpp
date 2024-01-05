@@ -5,8 +5,8 @@ using namespace std;
 class Data
 {
 public:
-    int key;
-    int value;
+    int keyValue;
+    int keyCount;
 };
 
 class Hashtable
@@ -22,8 +22,8 @@ public:
         lst.resize(capacity);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            it->key = 0;
-            it->value = 0;
+            it->keyValue = 0;
+            it->keyCount = 0;
         }
     }
 
@@ -98,16 +98,16 @@ public:
         int index = funselect(key);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            if (it->key == key)
+            if (it->keyValue == key)
             {
                 cout << "\nKey (" << key << ") already exists\n";
-                it->value++;
+                it->keyCount++;
                 return;
             }
         }
         auto it = next(lst.begin(), index);
-        it->key = key;
-        it->value++;
+        it->keyValue = key;
+        it->keyCount++;
         cout << "\nKey (" << key << ") has been inserted\n";
     }
 
@@ -116,9 +116,9 @@ public:
         int index = funselect(key);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            if (it->key == key && it->value > 0)
+            if (it->keyValue == key && it->keyCount > 0)
             {
-                    it->value--;
+                    it->keyCount--;
                     cout << "\nKey (" << key << ") has been removed\n";
                     return;
             }
@@ -128,12 +128,12 @@ public:
     void display()
     {
         cout << "Hashed key\t"
-             << "Value\t"
+             << "keyCount\t"
              << "Count" << endl;
         int i = 0;
         for (auto it = lst.begin(); it != lst.end(); ++it, i++)
         {
-            cout << i << "\t" << it->key << "\t\t" << it->value << endl;
+            cout << i << "\t" << it->keyValue << "\t\t" << it->keyCount << endl;
         }
     }
     int hashtablesize()

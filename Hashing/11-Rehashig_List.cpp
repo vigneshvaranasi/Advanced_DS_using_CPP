@@ -29,8 +29,8 @@ int prime_number(int capacity)
 class Data
 {
 public:
-    int key;
-    int value;
+    int keyValue;
+    int keyCount;
 };
 
 class Hashtable
@@ -46,8 +46,8 @@ public:
         lst.resize(capacity);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            it->key = 0;
-            it->value = 0;
+            it->keyValue = 0;
+            it->keyCount = 0;
         }
     }
 
@@ -123,15 +123,15 @@ public:
         new_lst.resize(new_capacity);
         for (auto it = new_lst.begin(); it != new_lst.end(); ++it)
         {
-            it->key = 0;
-            it->value = 0;
+            it->keyValue = 0;
+            it->keyCount = 0;
         }
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            int index = funselect(it->key);
+            int index = funselect(it->keyValue);
             auto it1 = next(new_lst.begin(), index);
-            it1->key = it->key;
-            it1->value = it->value;
+            it1->keyValue = it->keyValue;
+            it1->keyCount = it->keyCount;
         }
         lst = new_lst;
         capacity = new_capacity;
@@ -142,17 +142,17 @@ public:
         int index = funselect(key);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            if (it->key == key)
+            if (it->keyValue == key)
             {
                 cout << "\nKey (" << key << ") already exists\n";
-                it->value++;
+                it->keyCount++;
                 return;
             }
         }
         count++;
         auto it = next(lst.begin(), index);
-        it->key = key;
-        it->value++;
+        it->keyValue = key;
+        it->keyCount++;
         cout << "\nKey (" << key << ") has been inserted\n";
         int loadfactor = count / capacity;
         if (loadfactor >= 0.75)
@@ -167,9 +167,9 @@ public:
         int index = funselect(key);
         for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            if (it->key == key && it->value > 0)
+            if (it->keyValue == key && it->keyCount > 0)
             {
-                it->value--;
+                it->keyCount--;
                 cout << "\nKey (" << key << ") has been removed\n";
                 return;
             }
@@ -179,12 +179,12 @@ public:
     void display()
     {
         cout << "Hashed key\t"
-             << "Value\t"
+             << "keyCount\t"
              << "Count" << endl;
         int i = 0;
         for (auto it = lst.begin(); it != lst.end(); ++it, i++)
         {
-            cout << i << "\t" << it->key << "\t\t" << it->value << endl;
+            cout << i << "\t" << it->keyValue << "\t\t" << it->keyCount << endl;
         }
     }
     int hashtablesize()
