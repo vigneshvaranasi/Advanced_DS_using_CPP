@@ -176,6 +176,10 @@ public:
         }
         cout << "\nThis key does not exist\n";
     }
+    int hashtablesize()
+    {
+        return lst.size();
+    }
     void display()
     {
         cout << "Hashed key\t"
@@ -187,9 +191,18 @@ public:
             cout << i << "\t\t" << it->keyValue << "\t" << it->keyCount << endl;
         }
     }
-    int hashtablesize()
+    void search(int key)
     {
-        return lst.size();
+        int index = funselect(key);
+        for (auto it = lst.begin(); it != lst.end(); ++it)
+        {
+            if (it->keyValue == key)
+            {
+                cout << "\nKey (" << key << ") found at index " << index << endl;
+                return;
+            }
+        }
+        cout << "\nKey (" << key << ") not found\n";
     }
 };
 
@@ -218,6 +231,7 @@ int main()
              << "2. Removing item from the Hash Table\n"
              << "3. Check the size of Hash Table\n"
              << "4. Display a Hash Table\n"
+             << "5. Search an element in Hash Table\n" 
              << "Please enter your choice -:";
         cin >> choice;
 
@@ -239,6 +253,11 @@ int main()
             break;
         case 4:
             obj.display();
+            break;
+        case 5:
+            cout << "Enter the key to search-:";
+            cin >> key;
+            obj.search(key);
             break;
         default:
             cout << "Wrong Input\n";

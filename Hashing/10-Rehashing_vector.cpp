@@ -191,6 +191,18 @@ public:
             cout << i << "\t\t" << vec[i].keyValue << "\t" << vec[i].keyCount << endl;
         }
     }
+    void search(int key)
+    {
+        int index = funselect(key);
+        if (vec[index].keyValue == key)
+        {
+            cout << "\nKey (" << key << ") found at index " << index << endl;
+        }
+        else
+        {
+            cout << "\nKey (" << key << ") not found\n";
+        }
+    }
 };
 
 int main()
@@ -218,6 +230,7 @@ int main()
              << "2. Removing item from the Hash Table\n"
              << "3. Check the size of Hash Table\n"
              << "4. Display a Hash Table\n"
+             << "5. Search an element in Hash Table\n" 
              << "Please enter your choice -:";
         cin >> choice;
 
@@ -239,6 +252,11 @@ int main()
             break;
         case 4:
             obj.display();
+            break;
+        case 5:
+            cout << "Enter the element to search-:";
+            cin >> key;
+            obj.search(key);
             break;
         default:
             cout << "Wrong Input\n";
