@@ -1,16 +1,39 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-
+static int count = 0;
 using namespace std;
 
+
+int is_prime(int a)
+{
+    if (a < 2)
+        return 0;
+
+    for (int i = 2; i * i <= a; ++i)
+    {
+        if (a % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+int prime_number(int capacity)
+{
+    while (true)
+    {
+        if (is_prime(capacity))
+            return capacity;
+        else
+            --capacity;
+    }
+}
 class Data
 {
 public:
     int key;
     int value;
 };
-
 class Hashtable
 {
 public:
@@ -93,7 +116,29 @@ public:
 
         return hash_index;
     }
-
+    void rehash()
+    {
+        int newcapacity = capacity * 2;
+        int newprime = prime_number(newcapacity);
+        vector<Data> newvec;
+        newvec.resize(newprime);
+        for (int i = 0; i < newprime; i++)
+        {
+            newvec[i].key = 0;
+            newvec[i].value = 0;
+        }
+        for (int i = 0; i < capacity; i++)
+        {
+            if (vec[i].key != 0)
+            {
+                int index = funselect(vec[i].key);
+                newvec[index].key = vec[i].key;
+                newvec[index].value = vec[i].value;
+            }
+        }
+        vec = newvec;
+        capacity = newprime;
+    }
     void insert(int key)
     {
         int index = funselect(key);
@@ -107,6 +152,13 @@ public:
             vec[index].key = key;
             vec[index].value++;
             cout << "\nKey (" << key << ") has been inserted\n";
+            count++;
+        }
+        int loadfactor = count / capacity;
+        if (loadfactor >= 0.75)
+        {
+            cout << "Rehashing" << endl;
+            rehash();
         }
     }
 
@@ -141,30 +193,6 @@ public:
         }
     }
 };
-
-int is_prime(int a)
-{
-    if (a < 2)
-        return 0;
-
-    for (int i = 2; i * i <= a; ++i)
-    {
-        if (a % i == 0)
-            return 0;
-    }
-    return 1;
-}
-
-int prime_number(int capacity)
-{
-    while (true)
-    {
-        if (is_prime(capacity))
-            return capacity;
-        else
-            --capacity;
-    }
-}
 
 int main()
 {

@@ -1,9 +1,7 @@
 #include <iostream>
-#include <vector>
+#include <list>
 #include <cmath>
-
 using namespace std;
-
 class Data
 {
 public:
@@ -15,19 +13,20 @@ class Hashtable
 {
 public:
     int capacity, fun;
-    vector<Data> vec;
+    list<Data> lst;
 
     Hashtable(int capacity_, int fun_)
     {
         capacity = capacity_;
         fun = fun_;
-        vec.resize(capacity);
-        for (int i = 0; i < capacity; i++)
+        lst.resize(capacity);
+        for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            vec[i].key = 0;
-            vec[i].value = 0;
+            it->key = 0;
+            it->value = 0;
         }
     }
+
     int funselect(int key)
     {
         int hash_index = 0;
@@ -47,7 +46,7 @@ public:
             int a = str.size();
             if (a % 2 == 0)
             {
-                cout << "The square of the number is even and taken the 3rd digit from last " << endl;
+                cout << "The square of the number is even, taking the 3rd digit from last " << endl;
                 while (pow > 0 && i <= 3)
                 {
                     r = pow % 10;
@@ -60,7 +59,7 @@ public:
                 hash_index = key;
             else
             {
-                cout << "Taking the middle digit of square of the number" << endl;
+                cout << "Taking the middle digit of the square of the number" << endl;
                 while (number > 0 && j <= 2)
                 {
                     r = number % 10;
@@ -97,48 +96,49 @@ public:
     void insert(int key)
     {
         int index = funselect(key);
-        if (vec[index].key != 0)
+        for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            cout << "\nKey (" << key << ") already exists\n";
-            vec[index].value++;
+            if (it->key == key)
+            {
+                cout << "\nKey (" << key << ") already exists\n";
+                it->value++;
+                return;
+            }
         }
-        else
-        {
-            vec[index].key = key;
-            vec[index].value++;
-            cout << "\nKey (" << key << ") has been inserted\n";
-        }
+        auto it = next(lst.begin(), index);
+        it->key = key;
+        it->value++;
+        cout << "\nKey (" << key << ") has been inserted\n";
     }
 
     void remove_element(int key)
     {
         int index = funselect(key);
-        if (vec[index].key == key)
+        for (auto it = lst.begin(); it != lst.end(); ++it)
         {
-            vec[index].key = 0;
-            vec[index].value--;
-            cout << "\nKey (" << key << ") has been removed\n";
+            if (it->key == key && it->value > 0)
+            {
+                    it->value--;
+                    cout << "\nKey (" << key << ") has been removed\n";
+                    return;
+            }
         }
-        else
-        {
-            cout << "\nThis key does not exist\n";
-        }
+        cout << "\nThis key does not exist\n";
     }
-
-    int hashtablesize()
-    {
-        return vec.size();
-    }
-
     void display()
     {
-        cout << "Index\t"
-             << "Hashed key\t"
+        cout << "Hashed key\t"
+             << "Value\t"
              << "Count" << endl;
-        for (int i = 0; i < capacity; i++)
+        int i = 0;
+        for (auto it = lst.begin(); it != lst.end(); ++it, i++)
         {
-            cout << i << "\t" << vec[i].key << "\t\t" << vec[i].value << endl;
+            cout << i << "\t" << it->key << "\t\t" << it->value << endl;
         }
+    }
+    int hashtablesize()
+    {
+        return lst.size();
     }
 };
 
@@ -186,7 +186,7 @@ int main()
 
     do
     {
-        cout << "\nImplementation of Hash Table in C++ using vector\n\n";
+        cout << "\nImplementation of Hash Table in C++ using list\n\n";
         cout << "MENU-:\n1. Inserting item in the Hash Table\n"
              << "2. Removing item from the Hash Table\n"
              << "3. Check the size of Hash Table\n"
