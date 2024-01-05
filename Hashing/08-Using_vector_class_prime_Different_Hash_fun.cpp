@@ -132,12 +132,12 @@ public:
 
     void display()
     {
-        cout << "Index\t"
-             << "Hashed key\t"
+        cout << "Hashed key\t"
+             << "key\t"
              << "Count" << endl;
         for (int i = 0; i < capacity; i++)
         {
-            cout << i << "\t" << vec[i].keyValue << "\t\t" << vec[i].keyCount << endl;
+            cout << i << "\t\t" << vec[i].keyValue << "\t" << vec[i].keyCount << endl;
         }
     }
 };

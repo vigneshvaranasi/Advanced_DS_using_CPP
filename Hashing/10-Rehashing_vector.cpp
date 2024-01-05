@@ -1,32 +1,55 @@
 #include <iostream>
-#include <list>
+#include <vector>
 #include <cmath>
+static int count = 0;
 using namespace std;
+
+int is_prime(int a)
+{
+    if (a < 2)
+        return 0;
+
+    for (int i = 2; i * i <= a; ++i)
+    {
+        if (a % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+int prime_number(int capacity)
+{
+    while (true)
+    {
+        if (is_prime(capacity))
+            return capacity;
+        else
+            --capacity;
+    }
+}
 class Data
 {
 public:
     int keyValue;
     int keyCount;
 };
-
 class Hashtable
 {
 public:
     int capacity, fun;
-    list<Data> lst;
+    vector<Data> vec;
 
     Hashtable(int capacity_, int fun_)
     {
         capacity = capacity_;
         fun = fun_;
-        lst.resize(capacity);
-        for (auto it = lst.begin(); it != lst.end(); ++it)
+        vec.resize(capacity);
+        for (int i = 0; i < capacity; i++)
         {
-            it->keyValue = 0;
-            it->keyCount = 0;
+            vec[i].keyValue = 0;
+            vec[i].keyCount = 0;
         }
     }
-
     int funselect(int key)
     {
         int hash_index = 0;
@@ -46,7 +69,7 @@ public:
             int a = str.size();
             if (a % 2 == 0)
             {
-                cout << "The square of the number is even, taking the 3rd digit from last " << endl;
+                cout << "The square of the number is even and taken the 3rd digit from last " << endl;
                 while (pow > 0 && i <= 3)
                 {
                     r = pow % 10;
@@ -59,7 +82,7 @@ public:
                 hash_index = key;
             else
             {
-                cout << "Taking the middle digit of the square of the number" << endl;
+                cout << "Taking the middle digit of square of the number" << endl;
                 while (number > 0 && j <= 2)
                 {
                     r = number % 10;
@@ -92,79 +115,83 @@ public:
 
         return hash_index;
     }
-
+    void rehash()
+    {
+        int newcapacity = capacity * 2;
+        int newprime = prime_number(newcapacity);
+        vector<Data> newvec;
+        newvec.resize(newprime);
+        for (int i = 0; i < newprime; i++)
+        {
+            newvec[i].keyValue = 0;
+            newvec[i].keyCount = 0;
+        }
+        for (int i = 0; i < capacity; i++)
+        {
+            if (vec[i].keyValue != 0)
+            {
+                int index = funselect(vec[i].keyValue);
+                newvec[index].keyValue = vec[i].keyValue;
+                newvec[index].keyCount = vec[i].keyCount;
+            }
+        }
+        vec = newvec;
+        capacity = newprime;
+    }
     void insert(int key)
     {
         int index = funselect(key);
-        for (auto it = lst.begin(); it != lst.end(); ++it)
+        if (vec[index].keyValue != 0)
         {
-            if (it->keyValue == key)
-            {
-                cout << "\nKey (" << key << ") already exists\n";
-                it->keyCount++;
-                return;
-            }
+            cout << "\nKey (" << key << ") already exists\n";
+            vec[index].keyCount++;
         }
-        auto it = next(lst.begin(), index);
-        it->keyValue = key;
-        it->keyCount++;
-        cout << "\nKey (" << key << ") has been inserted\n";
+        else
+        {
+            vec[index].keyValue = key;
+            vec[index].keyCount++;
+            cout << "\nKey (" << key << ") has been inserted\n";
+            count++;
+        }
+        int loadfactor = count / capacity;
+        if (loadfactor >= 0.75)
+        {
+            cout << "Rehashing" << endl;
+            rehash();
+        }
     }
 
     void remove_element(int key)
     {
         int index = funselect(key);
-        for (auto it = lst.begin(); it != lst.end(); ++it)
+        if (vec[index].keyValue == key)
         {
-            if (it->keyValue == key && it->keyCount > 0)
-            {
-                    it->keyCount--;
-                    cout << "\nKey (" << key << ") has been removed\n";
-                    return;
-            }
+            vec[index].keyValue = 0;
+            vec[index].keyCount--;
+            cout << "\nKey (" << key << ") has been removed\n";
         }
-        cout << "\nThis key does not exist\n";
+        else
+        {
+            cout << "\nThis key does not exist\n";
+        }
     }
+
+    int hashtablesize()
+    {
+        return vec.size();
+    }
+
     void display()
     {
         cout << "Hashed key\t"
-             << "Key\t"
+             << "key\t"
              << "Count" << endl;
-        int i = 0;
-        for (auto it = lst.begin(); it != lst.end(); ++it, i++)
+        for (int i = 0; i < capacity; i++)
         {
-            cout << i << "\t\t" << it->keyValue << "\t" << it->keyCount << endl;
+            cout << i << "\t\t" << vec[i].keyValue << "\t" << vec[i].keyCount << endl;
         }
     }
-    int hashtablesize()
-    {
-        return lst.size();
-    }
 };
-
-int is_prime(int a)
-{
-    if (a < 2)
-        return 0;
-
-    for (int i = 2; i * i <= a; ++i)
-    {
-        if (a % i == 0)
-            return 0;
-    }
-    return 1;
-}
-
-int prime_number(int capacity)
-{
-    while (true)
-    {
-        if (is_prime(capacity))
-            return capacity;
-        else
-            --capacity;
-    }
-}
 
 int main()
 {
@@ -186,7 +213,7 @@ int main()
 
     do
     {
-        cout << "\nImplementation of Hash Table in C++ using list\n\n";
+        cout << "\nImplementation of Hash Table in C++ using vector\n\n";
         cout << "MENU-:\n1. Inserting item in the Hash Table\n"
              << "2. Removing item from the Hash Table\n"
              << "3. Check the size of Hash Table\n"

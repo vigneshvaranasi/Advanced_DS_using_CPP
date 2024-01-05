@@ -179,12 +179,12 @@ public:
     void display()
     {
         cout << "Hashed key\t"
-             << "keyCount\t"
+             << "key\t"
              << "Count" << endl;
         int i = 0;
         for (auto it = lst.begin(); it != lst.end(); ++it, i++)
         {
-            cout << i << "\t" << it->keyValue << "\t\t" << it->keyCount << endl;
+            cout << i << "\t\t" << it->keyValue << "\t" << it->keyCount << endl;
         }
     }
     int hashtablesize()
