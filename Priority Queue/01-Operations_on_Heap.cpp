@@ -3,11 +3,14 @@ using namespace std;
 vector<int> heap;
 void insertion(int element) {
     heap.push_back(element);
-    int size = heap.size() - 1;
-    while (size > 0 &&  heap[(size - 1) / 2] < heap[size]) 
+    int currentIndex = heap.size() - 1;
+    while (currentIndex > 0) 
     {
-        swap(heap[size], heap[(size - 1) / 2]);
-        size = (size - 1) / 2;
+        int parentIndex = (currentIndex - 1) / 2;
+        if (heap[currentIndex] > heap[parentIndex]) {
+            swap(heap[currentIndex], heap[parentIndex]);
+            currentIndex = parentIndex;
+        } 
     }
 }
 void maxElement()
@@ -17,13 +20,15 @@ void maxElement()
     else
         cout<<"Heap is Empty"<<endl;
 }
-void minElement()
-{
-    if(heap.size()>1)
-        cout<<"Minimum Element is: "<<*min_element(heap.begin()+1,heap.end())<<endl;
-    else
-        cout<<"Heap is Empty"<<endl;
+void minElement() {
+    if (heap.size() > 1) {
+        auto it = min_element(heap.begin() + 1, heap.end());
+        cout << "Minimum Element is: " << *it << endl;
+    } 
+    else 
+        cout << "Heap is Empty" << endl;
 }
+
 void display()
 {
     if(heap.size()<=0)
@@ -37,6 +42,7 @@ void display()
         cout<<endl;
     }
 }
+
 int main()
 {
     int choice,element;
