@@ -1,17 +1,46 @@
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> heap;
-void insertion(int element)
-{
+void insertion(int element) {
     heap.push_back(element);
     int currentIndex = heap.size() - 1;
-    while (currentIndex > 0)
-    {
+    while (currentIndex > 0) {
         int parentIndex = (currentIndex - 1) / 2;
-        if (heap[currentIndex] > heap[parentIndex])
-        {
+        if (heap[currentIndex] > heap[parentIndex]) {
             swap(heap[currentIndex], heap[parentIndex]);
             currentIndex = parentIndex;
+        } 
+        else 
+            break;
+    }
+}
+
+void deletion()
+{
+    if (heap.size() <= 0)
+    {
+        cout << "Heap is Empty" << endl;
+    }
+    else
+    {
+        swap(heap[1], heap[heap.size() - 1]);
+        heap.pop_back();
+        int currentIndex = 1;
+        while (currentIndex < heap.size())
+        {
+            int leftChild = 2 * currentIndex;
+            int rightChild = 2 * currentIndex + 1;
+            if (leftChild >= heap.size())
+                break;
+            int maxIndex = currentIndex;
+            if (heap[maxIndex] < heap[leftChild])
+                maxIndex = leftChild;
+            if (rightChild < heap.size() && heap[maxIndex] < heap[rightChild])
+                maxIndex = rightChild;
+            if (maxIndex == currentIndex)
+                break;
+            swap(heap[currentIndex], heap[maxIndex]);
+            currentIndex = maxIndex;
         }
     }
 }
@@ -76,6 +105,11 @@ int main()
                 cout << "Enter the Element to Insert: ";
                 cin >> element;
                 insertion(element);
+                break;
+            }
+            case 2:
+            {
+                deletion();
                 break;
             }
             case 3:
