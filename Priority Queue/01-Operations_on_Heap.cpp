@@ -6,7 +6,8 @@ void insertion(int element) {
     int currentIndex = heap.size() - 1;
     while (currentIndex > 0) {
         int parentIndex = (currentIndex - 1) / 2;
-        if (heap[currentIndex] > heap[parentIndex]) {
+        if (heap[currentIndex] > heap[parentIndex]) 
+        {
             swap(heap[currentIndex], heap[parentIndex]);
             currentIndex = parentIndex;
         } 
@@ -124,7 +125,7 @@ int main()
             }
             case 5:
             {
-                cout << "Heap Size is: " << heap.size() - 1 << endl;
+                cout << "Heap Size is: " << heap.size()<< endl;
                 break;
             }
             case 6:
