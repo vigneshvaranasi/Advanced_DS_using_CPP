@@ -24,6 +24,7 @@ void deletion()
     }
     else
     {
+        cout<<"Deleted Element is: "<<heap[1]<<endl;
         swap(heap[1], heap[heap.size() - 1]);
         heap.pop_back();
         int currentIndex = 1;
@@ -48,7 +49,7 @@ void deletion()
 void maxElement()
 {
     if (heap.size() > 1)
-        cout << "Maximum Element is: " << heap[1] << endl;
+        cout << "Maximum Element is: " << heap[0] << endl;
     else
         cout << "Heap is Empty" << endl;
 }
