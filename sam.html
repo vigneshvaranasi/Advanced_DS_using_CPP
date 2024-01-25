@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0; 
+    }
+
+    body::before {
+      content: "";
+      box-sizing: border-box;
+      border: 2px solid black; 
+      width: calc(100% - 40px);
+      height: calc(100% - 40px); 
+      position: fixed;
+      top: 20px;
+      left: 20px;
+    }
+
+    .content-container {
+      box-sizing: border-box;
+      padding: 20px;
+      position: relative;
+      z-index: 1; 
+    }
+
+    p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content-container">
+  </div>
+
+</body>
+</html>
