@@ -15,33 +15,32 @@ void insertion(int element) {
             break;
     }
 }
+void heapify(int currentIndex) {
+    int leftChild = 2 * currentIndex + 1;
+    int rightChild = 2 * currentIndex + 2;
+    int maxIndex = currentIndex;
 
+    if (leftChild < heap.size() && heap[leftChild] > heap[maxIndex])
+        maxIndex = leftChild;
+
+    if (rightChild < heap.size() && heap[rightChild] > heap[maxIndex])
+        maxIndex = rightChild;
+
+    if (maxIndex != currentIndex) {
+        swap(heap[currentIndex], heap[maxIndex]);
+        heapify(maxIndex);
+    }
+}
 void deletion() {
     if (heap.size() <= 0) {
         cout << "Heap is Empty" << endl;
-    } else {
+    } 
+    else {
         cout << "Deleted Element is: " << heap[0] << endl;
         swap(heap[0], heap[heap.size() - 1]);
         heap.pop_back();
         int currentIndex = 0;
-
-        while (currentIndex < heap.size()) {
-            int leftChild = 2 * currentIndex + 1;
-            int rightChild = 2 * currentIndex + 2;
-            int maxIndex = currentIndex;
-
-            if (leftChild < heap.size() && heap[leftChild] > heap[maxIndex])
-                maxIndex = leftChild;
-
-            if (rightChild < heap.size() && heap[rightChild] > heap[maxIndex])
-                maxIndex = rightChild;
-
-            if (maxIndex == currentIndex)
-                break;
-
-            swap(heap[currentIndex], heap[maxIndex]);
-            currentIndex = maxIndex;
-        }
+        heapify(currentIndex);
     }
 }
 void maxElement()
@@ -92,8 +91,10 @@ void mergeHeaps()
     for (int i = 0; i < size; i++)
     {
         cin >> element;
-        insertion(element);
+        heap.push_back(element);
     }
+    for(int i=heap.size()/2-1;i>=0;i--)
+        heapify(i);
     cout << "Merged Heap: ";
     display();
 }
