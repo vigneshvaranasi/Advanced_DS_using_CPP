@@ -16,31 +16,29 @@ void insertion(int element) {
     }
 }
 
-void deletion()
-{
-    if (heap.size() <= 0)
-    {
+void deletion() {
+    if (heap.size() <= 0) {
         cout << "Heap is Empty" << endl;
-    }
-    else
-    {
-        cout<<"Deleted Element is: "<<heap[1]<<endl;
-        swap(heap[1], heap[heap.size() - 1]);
+    } else {
+        cout << "Deleted Element is: " << heap[0] << endl;
+        swap(heap[0], heap[heap.size() - 1]);
         heap.pop_back();
-        int currentIndex = 1;
-        while (currentIndex < heap.size())
-        {
-            int leftChild = 2 * currentIndex;
-            int rightChild = 2 * currentIndex + 1;
-            if (leftChild >= heap.size())
-                break;
+        int currentIndex = 0;
+
+        while (currentIndex < heap.size()) {
+            int leftChild = 2 * currentIndex + 1;
+            int rightChild = 2 * currentIndex + 2;
             int maxIndex = currentIndex;
-            if (heap[maxIndex] < heap[leftChild])
+
+            if (leftChild < heap.size() && heap[leftChild] > heap[maxIndex])
                 maxIndex = leftChild;
-            if (rightChild < heap.size() && heap[maxIndex] < heap[rightChild])
+
+            if (rightChild < heap.size() && heap[rightChild] > heap[maxIndex])
                 maxIndex = rightChild;
+
             if (maxIndex == currentIndex)
                 break;
+
             swap(heap[currentIndex], heap[maxIndex]);
             currentIndex = maxIndex;
         }
@@ -79,10 +77,25 @@ void display()
 }
 void peek()
 {
-    if (heap.size() > 1)
-        cout << "Peek Element is: " << heap[1] << endl;
+    if (heap.size() > 0)
+        cout << "Peek Element is: " << heap[0] << endl;
     else
         cout << "Heap is Empty" << endl;
+}
+
+void mergeHeaps()
+{
+    int size,element; 
+    cout<<"Enter the size of heap2: ";
+    cin >> size;
+    cout<<"Enter the elements of heap2: ";
+    for (int i = 0; i < size; i++)
+    {
+        cin >> element;
+        insertion(element);
+    }
+    cout << "Merged Heap: ";
+    display();
 }
 
 int main()
@@ -97,7 +110,8 @@ int main()
         cout << "5. Heap Size" << endl;
         cout << "6. Display Heap" << endl;
         cout << "7. Peek Element" << endl;
-        cout << "8. Exit" << endl;
+        cout << "8. Merge Heaps" << endl;
+        cout << "9. Exit" << endl;
         cout << "Enter your choice: ";
         cin >> choice;
         switch (choice)
@@ -140,6 +154,11 @@ int main()
                 break;
             }
             case 8:
+            {
+                mergeHeaps();
+                break;
+            }
+            case 9:
             {
                 exit(0);
             }
