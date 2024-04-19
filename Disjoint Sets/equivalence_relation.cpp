@@ -36,7 +36,7 @@ int main() {
     int n;
     cout << "Enter the number of elements: ";
     cin >> n;
-        DisjointSet ds(n);
+    DisjointSet ds(n);
     while (true) {
         int x, y;
         cout << "Enter two elements to perform union operation (or enter -1 to stop): ";
@@ -57,3 +57,14 @@ int main() {
     }  
   return 0;
 }
+
+/* 
+5
+0 1
+2 3
+1 3
+-1
+0 2
+1 3
+-1
+ */
