@@ -155,24 +155,21 @@ public:
     }
 };
 
-int is_prime(int a)
-{
-    if (a < 2)
-        return 0;
-
-    for (int i = 2; i * i <= a; ++i)
-    {
-        if (a % i == 0)
-            return 0;
+bool isPrime(int num) {
+    int count = 0;
+    for (int i = 1; i <= num; i++) {
+        if (num % i == 0) {
+            count++;
+        }
     }
-    return 1;
+    return count == 2;
 }
 
 int prime_number(int capacity)
 {
     while (true)
     {
-        if (is_prime(capacity))
+        if (isPrime(capacity))
             return capacity;
         else
             --capacity;
