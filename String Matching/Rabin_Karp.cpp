@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void rabinKarp(const string& text, const string& pattern) {
+void rabinKarp( string text,  string pattern) {
     int n = text.length(), m = pattern.length();
     int d = 256, q = 101;
     int h = 1, p = 0, t = 0;
