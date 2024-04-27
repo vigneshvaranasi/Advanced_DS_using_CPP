@@ -32,11 +32,23 @@ void floydWarshall(int dist[V][V])
 }
 int main()
 {
-    int graph[V][V] = { { 0, 5, INF, 10 },
-                        { INF, 0, 3, INF },
-                        { INF, INF, 0, 1 },
-                        { INF, INF, INF, 0 } };
+    int graph[V][V];
+    cout << "Enter the graph matrix (" << V << "x" << V << "):\n";
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            cin >> graph[i][j];
+            if (graph[i][j] == -1)
+                graph[i][j] = INF;
+        }
+    }
 
     floydWarshall(graph);
     return 0;
 }
+
+/* 
+0 5 -1 10
+-1 0 3 -1
+-1 -1 0 1
+-1 -1 -1 0
+ */
