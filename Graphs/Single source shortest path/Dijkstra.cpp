@@ -48,13 +48,10 @@ void dijkstra(int graph[MAX_VERTICES][MAX_VERTICES], int src, int n) {
 
 int main() {
     int n, numEdges, src;
-    cout << "Enter the number of vertices: ";
-    cin >> n;
+    cout << "Enter the number of vertices and Edges: ";
+    cin >> n >> numEdges;
 
     int graph[MAX_VERTICES][MAX_VERTICES] = {0};
-
-    cout << "Enter the number of edges: ";
-    cin >> numEdges;
 
     for (int i = 0; i < numEdges; i++) {
         int src, dest, weight;
@@ -71,16 +68,14 @@ int main() {
     return 0;
 }
 /* 
-6
-9
+6 8
 1 2 2
-2 3 6
-3 4 9
-4 5 3
-5 6 2
-6 1 8
-6 3 3
-6 2 5
-3 5 1
+2 4 7
+4 6 1
+5 6 5
+3 5 3
+1 3 4
+2 3 1
+5 4 2
 1
- */
+*/
