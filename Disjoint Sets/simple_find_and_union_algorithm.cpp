@@ -2,22 +2,19 @@
 using namespace std;
 
 int findRoot(vector<int>& parent, int x) {
-    if (parent[x] == x) {
-        return x;
-    }
-    int parentNode = parent[x];
-    return parentNode;
+    if (parent[x] != x)
+        parent[x] = findRoot(parent,parent[x]);
+    return parent[x];
 }
 
 void unionSets(vector<int>& parent, int x, int y) {
     int xRoot = findRoot(parent, x);
     int yRoot = findRoot(parent, y);
     if (xRoot != yRoot) {
-        if (xRoot < yRoot) {
+        if (xRoot < yRoot) 
             parent[yRoot] = xRoot;
-        } else {
+        else 
             parent[xRoot] = yRoot;
-        }
     }
 }
 
