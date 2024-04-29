@@ -1,23 +1,25 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <vector>
 using namespace std;
 
-vector <int> parent;
+vector<int> parent;
 
 int findRoot(int x) {
-    if (parent[x] != x)
-        parent[x] = findRoot(parent[x]);
-    return parent[x];
+    while (parent[x] != x) {
+        x = parent[x];
+    }
+    return x;
 }
 
 void unionSets(int x, int y) {
-    int xRoot = findRoot(x);
-    int yRoot = findRoot(y);
-    if (xRoot != yRoot) {
-        if (xRoot < yRoot) 
-            parent[yRoot] = xRoot;
-        else 
-            parent[xRoot] = yRoot;
-    }
+  int xRoot = findRoot(x);
+  int yRoot = findRoot(y);
+  if (xRoot != yRoot) {
+    if(xRoot < yRoot)
+      parent[yRoot] = x;
+    else
+      parent[xRoot] = y;
+  }
 }
 
 int main() {
@@ -39,8 +41,8 @@ int main() {
                 int element;
                 cout << "Enter the element: ";
                 cin >> element;
-                int root = findRoot(element);
-                cout << "Parent of " << element << " is " << root << endl;
+                cout << "Parent of " << element << " is " << parent[element] << endl;
+                cout << "Root of " << element << " is " << findRoot(element) << endl;
                 break;
             }
             case 2: {
