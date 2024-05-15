@@ -13,7 +13,7 @@ int findPar(int node) {
     return parent[node] = findPar(parent[node]); // Path compression
 }
 
-void simpleUnion(int u, int v) {
+void smartUnion(int u, int v) {
     u = findPar(u);
     v = findPar(v);
     if (ranks[u] < ranks[v]) {
@@ -55,7 +55,7 @@ int main() {
                 int u, v;
                 cout << "Enter values for u and v (separated by space) for union operation: ";
                 cin >> u >> v;
-                simpleUnion(u, v);
+                smartUnion(u, v);
                 cout << "Union performed." << endl;
                 break;
             }
